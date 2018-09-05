@@ -73,4 +73,25 @@ int main (int argc, char *argv[]) {
 	}
 	free(names);
 	return 0;
- }
+ }# Homework 1: Farthing
+
+### Estimated Time: 
+18 hours
+
+### Log
+* 9/3/2018 - 10:00pm-11:30pm - Read pset spec and started coding
+* 9/4/2018 -  4:00pm- 4:30pm - Code parsing roughly coded
+
+
+### Total Time: 
+2 hr
+
+### Collaboration: 
+I discussed my answers with myself.
+
+### Discussion
+The program specification is long and dense. There are a lot of details to pay attention to. I have a general idea of what I want to accomplish, so I think the best approach for now is to start coding and to add the details later.
+
+
+
+
