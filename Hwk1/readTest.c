@@ -52,13 +52,26 @@ int main(int argc, char const *argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	char target_length_buffer[32];
+	snprintf(target_length_buffer, 32, "%ld", strlen(target_file));
+	printf("%s\n", target_length_buffer);
 
+	char file_size_buffer[32];
+	snprintf(file_size_buffer, 32, "%lld", (long long) file_info.st_size);
+	printf("%s\n", file_size_buffer);
 
+	fputs(target_length_buffer, archive);
+	fputs(" | ", archive);
+	fputs(target_file, archive);
+	fputs(" | ", archive);
+	fputs(file_size_buffer, archive);
+	fputc('\n', archive);
 	// get header? "put" header into archive
 	// 13 | filetest.test | 100000
 	while ( (ch = fgetc(target)) != EOF){
 		fputc(ch, archive);
 	}
+	//fputc('\n', archive);
 
 	printf("Target file archived successfully\n");
 
