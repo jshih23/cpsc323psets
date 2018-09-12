@@ -7,7 +7,8 @@
 * 9/3/2018	10:00pm-11:30pm - Read pset spec and started coding
 * 9/4/2018	4:00pm-4:30pm 	- Code parsing roughly coded
 * 9/5/2018	6:00pm-8:00pm 	- Experimenting with file read and writes for r key function
-* 9/11/2018	10:30pm-11:30pm	- Continued working on r key function. Headers working. 
+* 9/11/2018	10:30pm-11:30pm	- Continued working on r key function. Headers working.
+* 9/12/2018	3:00pm-4:00pm 	- Realized the power of temp files.
 
 
 ### Total Time: 
@@ -17,7 +18,7 @@
 I discussed ideas with Allie Carrigan.
 
 ### Discussion
-The program specification is long and dense. There are a lot of details to pay attention to. I have a general idea of what I want to accomplish, so I think the best approach for now is to start coding and to add the details later.
+The program specification is long and dense. There are a lot of details to pay attention to. I have a general idea of what I want to accomplish, so I think the best approach for now is to start coding and to add the details later. I was trying to keep only one archive file while replacing files in the archive when given the 'r' option. I was thinking of deleting the file in the archive, and then appending the new replacement at the end of the file. This might work, but after realizing how we can use temp archive files for this purpose, I think I want to go in a new direction. Will restart, but I think it's a much cleaner solution to read from one file, and write to another, as opposed to reading and writing and deleting in a single file.
 
 
 

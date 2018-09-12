@@ -1,18 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h> 
+#include <sys/types.h>
+#define _GNU_SOURCE
 #include <sys/stat.h> 
 #include <unistd.h>
 
 int isDirectory(const char *path);
 int isReg(const char *path);
+int readTarget(const char *path);
+
+FILE *archive, *target;
+char ch;
 
 
 int main(int argc, char const *argv[])
 {
-	char ch, archive_file[80], target_file[80];
-	FILE *archive, *target;
+	char archive_file[80], target_file[80];
+
 
 	printf("Enter name archive file\n");
 	scanf("%s", archive_file);
@@ -47,45 +52,11 @@ int main(int argc, char const *argv[])
 	else if (isReg(target_file) != 0){
 		printf("%s is a file\n", target_file);
 		// open NAME file to read
-		target = fopen(target_file, "r");
-
-		struct stat file_info;
-
-		lstat(target_file, &file_info);
-
-		if (target == NULL){
-			fclose(archive);
-			printf("No NAME file found\n");
-			exit(EXIT_FAILURE);
-		}
-
-		char target_length_buffer[32];
-		snprintf(target_length_buffer, 32, "%ld", strlen(target_file));
-		printf("%s\n", target_length_buffer);
-
-		char file_size_buffer[32];
-		snprintf(file_size_buffer, 32, "%lld", (long long) file_info.st_size);
-		printf("%s\n", file_size_buffer);
-
-		fputs(target_length_buffer, archive);
-		fputs(" | ", archive);
-		fputs(target_file, archive);
-		fputs(" | ", archive);
-		fputs(file_size_buffer, archive);
-		fputc('\n', archive);
-		// get header? "put" header into archive
-		// 13 | filetest.test | 100000
-		while ( (ch = fgetc(target)) != EOF){
-			fputc(ch, archive);
-		}
-		//fputc('\n', archive);
-
-		printf("Target file archived successfully\n");
-
-		fclose(archive);
-		fclose(target);
+		readTarget(target_file);
 		return 0;
 	}
+	else
+		printf("aint no file yo\n");
 	
 }
 
@@ -101,4 +72,60 @@ int isReg(const char *path) {
 	if (lstat(path, &statbuf) != 0)
 		return 0;
 	return S_ISREG(statbuf.st_mode);
+}
+
+int readTarget(const char *path){
+	target = fopen(path, "r+");
+	struct stat file_info;
+
+	lstat(path, &file_info);
+
+	if (target == NULL){
+		fclose(archive);
+		printf("No NAME file found\n");
+		exit(EXIT_FAILURE);
+	}
+
+	char target_length_buffer[32];
+	snprintf(target_length_buffer, 32, "%ld", strlen(path));
+	//printf("%s\n", target_length_buffer);
+
+	char file_size_buffer[32];
+	snprintf(file_size_buffer, 32, "%lld", (long long) file_info.st_size);
+	//printf("%s\n", file_size_buffer);
+
+	// read through file and search for path in a header
+	char temp[1024];
+	char buffer[512];
+	snprintf(buffer, sizeof(buffer), "|%s\n", path);
+	char name[512];
+	int len, size;
+
+	while (fgets(temp, 1024, archive) != NULL){
+		if (strstr(temp, buffer) != NULL){
+			printf("it's in there\n");
+			sscanf( temp, "%d|%s", &len, name);
+			printf("len: %d, name: %s\n", len, name);
+			
+		}
+	}
+
+	// fputs(target_length_buffer, archive);
+	// fputc("|", archive);
+	// fputs(path, archive);
+	// fputc("\n", archive);
+	// fputs(file_size_buffer, archive);
+	// fputs('|\n', archive);
+	// // get header? "put" header into archive
+	// // 13 | filetest.test | 100000
+	// while ( (ch = fgetc(target)) != EOF){
+	// 	fputc(ch, archive);
+	// }
+	// //fputc('\n', archive);
+
+	// printf("Target file archived successfully\n");
+
+	fclose(archive);
+	fclose(target);
+	return 0;
 }
