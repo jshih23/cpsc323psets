@@ -434,7 +434,7 @@ int delete(char *archive_name, char **names, int names_count){
 	// if we run into a file name in the archive that matches with a name in file_names
 	//		then we have to skip the file in the archive, and write the new file into temp
 	// else for the files that we didn't run into, we append them to temp
-	char temp_name[PATH_MAX];
+	char temp_name[1024];
 	if (!std){
 		int file_descriptor = -1;
 		memset(temp_name, 0, sizeof(temp_name));
@@ -539,7 +539,7 @@ int replace(char *archive_name, char **names, int names_count){
 	// if we run into a file name in the archive that matches with a name in file_names
 	//		then we have to skip the file in the archive, and write the new file into temp
 	// else for the files that we didn't run into, we append them to temp
-	char temp_name[PATH_MAX];
+	char temp_name[1024];
 	if (!std){
 		int file_descriptor = -1;
 		memset(temp_name, 0, sizeof(temp_name));
@@ -566,7 +566,7 @@ int replace(char *archive_name, char **names, int names_count){
 	char name[512];
 	int len, size;
 
-	char target_name[PATH_MAX];
+	char target_name[1024];
 	memset(target_name, 0, sizeof(target_name));
 
 	bool found = false;
