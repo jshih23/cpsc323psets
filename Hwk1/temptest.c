@@ -72,7 +72,7 @@ int main(int argc, char const *argv[])
 			return 1;
 		}
 		else{
-			 printf("\n Temporary file [%s] created\n", temp_name);
+			 printf("Temporary file [%s] created\n", temp_name);
 		}
 		// open temporary file with pointer temp_file
 		temp_file = fdopen(file_descriptor, "w");

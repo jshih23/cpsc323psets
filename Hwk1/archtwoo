@@ -1,0 +1,45 @@
+replace
+testdir/one
+testdir/two
+testdir/dir1/three
+10 | file.three | 53
+1 2 3 4 5 6 7 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+skipped 1
+skipped 2
+skipped 
+
+11 | testdir/one | 3
+12
+skipped 2
+skipped 
+
+skipped 2
+skipped 
+
+skipped 9
+skipped 
+
+skipped 9
+skipped 
+
+11 | testdir/two | 8
+2
+2
+9
+9
+skipped 1
+skipped  
+skipped 2
+skipped  
+skipped 3
+skipped  
+skipped 4
+skipped 
+
+18 | testdir/dir1/three | 8
+1 2 3 4
+8 | file.one | 8
+1 2 4 3
+8 | file.two | 3
+2
+

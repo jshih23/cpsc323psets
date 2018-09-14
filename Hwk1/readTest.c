@@ -16,13 +16,13 @@ char ch;
 
 int main(int argc, char const *argv[])
 {
-	char archive_file[80], target_file[80];
+	char archive_file[80], target_file[80], temp_file[80];
 
 
 	printf("Enter name archive file\n");
 	scanf("%s", archive_file);
 
-	archive = fopen(archive_file, "a+"); // open archive for reading and writing
+	archive = fopen(archive_file, "r"); // open archive for reading only
 
 	// if archive_file doesn't exist, we must create a new blank archive file with name archive_file
 	if( archive == NULL )
@@ -106,7 +106,7 @@ int readTarget(const char *path){
 			printf("it's in there\n");
 			sscanf( temp, "%d|%s", &len, name);
 			printf("len: %d, name: %s\n", len, name);
-			
+
 		}
 	}
 
