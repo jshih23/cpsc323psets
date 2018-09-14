@@ -14,15 +14,19 @@ ESTIMATE of time to complete assignment: 18 hours
 * 9/13/2018 10:30am-11:30am	- debugging some r flag issues and working on "-" archive
 * 9/13/2018 1:30pm-3:30pm 	- Almost finished implementing r and d flags.
 * 9/13/2018 5:30pm-10:00pm 	- Added e and t flags. Debugging lots
+* 9/13/2018	11:00pm-12:30am - Running tests, passed 7... Out of time.
 
 ### Total time
-19:45  TOTAL time spent
+23  TOTAL time spent
 
 ### Collaboration: 
 I discussed ideas with Allie Carrigan.
 
 ### Discussion
-The program specification is long and dense. There are a lot of details to pay attention to. I have a general idea of what I want to accomplish, so I think the best approach for now is to start coding and to add the details later. I was trying to keep only one archive file while replacing files in the archive when given the 'r' option. I was thinking of deleting the file in the archive, and then appending the new replacement at the end of the file. This might work, but after realizing how we can use temp archive files for this purpose, I think I want to go in a new direction. Will restart, but I think it's a much cleaner solution to read from one file, and write to another, as opposed to reading and writing and deleting in a single file. A major challenge was refreshing on recursion. I have a recursive function that generates the relatives paths of all files in a directory, including all relative paths in all subdirectories. This was surprisingly difficult to do. Definitely failed to keep the line count low.
+My initial approach was misguided. I was trying to keep only one archive file while replacing files in the archive when given the 'r' option. I was thinking of deleting the file in the archive, and then appending the new replacement at the end of the file. Switching directions and utilizing a temp file helped a lot, but the transition was messy. Restarting might have been the better move because I was wrestling with strange bugs for an inordinate amount of time.
 
+Another challenge was refreshing on recursion. Recursing through a directory to assemble a list of the relatives paths of all files in a directory, including all relative paths in all subdirectories was a bit difficult.
+
+The biggest challenge is probably shooting for the recommended line count. My code is a frankeinstein's monster of a program, and it performs quite miserably and debugging is a nightmare. I feel that restarting would have been optimal, but alas I'm out of time. Maybe next time I'll know when to restart.
 
 
