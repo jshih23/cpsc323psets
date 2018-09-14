@@ -319,22 +319,13 @@ int extract(char *archive_name, char **names, int names_count){
 				sscanf( temp, "%d | %s | %d", &len, name, &size);
 
 				target_file = fopen_mkdir(file_names[i], "w+");
-				if (target_file == NULL){
-					fprintf(stderr, "farthing: %s could not be written\n", file_names[i]);
-					err = true;
-				}
-				if (err){
-					// skip
-				}
-				else {				
-					for(int i = 0; i < size; i++){
-						if ((ch = fgetc(archive_file)) != EOF){
-							fputc(ch, target_file);
-						}
-					}
-					fclose(target_file);
-				}
 				
+				for(int i = 0; i < size; i++){
+					if ((ch = fgetc(archive_file)) != EOF){
+						fputc(ch, target_file);
+					}
+				}
+				fclose(target_file);		
 			}
 			if (found){
 				break;
@@ -342,9 +333,8 @@ int extract(char *archive_name, char **names, int names_count){
 		}
 		found = false;
 	}
-
 	fclose(archive_file);
-	fclose(target_file);
+
 	for (int i = 0; i < num_file_names; ++i)
 	{
 		if (seen[i] == 0){
