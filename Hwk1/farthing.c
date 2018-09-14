@@ -46,7 +46,6 @@ int main (int argc, char *argv[]) {
 		std = true;
 	}
 
-	//printf("archive_name = %s\n", argv[2]);
 	int names_count = 0;
 	// is it okay to use global variables like this? Also, is it okay to realloc like this? 
 	char ** names;
@@ -109,7 +108,7 @@ int list_all(char *archive_name, char **names, int names_count){
 	if (!std){
 		archive_file = fopen_mkdir(archive_name, "r");
 		if( archive_file == NULL ){
-			printf("farthing: archive file %s does not exist\n", archive_name);
+			fprintf(stderr, "farthing: archive file %s does not exist\n", archive_name);
 			for (int i = 0; i < names_count; ++i)
 				free(names[i]);
 			free(names);
@@ -143,7 +142,7 @@ int list(char *archive_name, char **names, int names_count){
 	if (!std){
 		archive_file = fopen_mkdir(archive_name, "r");
 		if( archive_file == NULL ){
-			printf("farthing: archive file %s does not exist\n", archive_name);
+			fprintf(stderr, "farthing: archive file %s does not exist\n", archive_name);
 			for (int i = 0; i < names_count; ++i)
 				free(names[i]);
 			free(names);
@@ -234,7 +233,7 @@ int extract_all(char *archive_name, char **names, int names_count){
 	if (!std){
 		archive_file = fopen_mkdir(archive_name, "r");
 		if( archive_file == NULL ){
-			printf("farthing: archive file %s does not exist\n", archive_name);
+			fprintf(stderr, "farthing: archive file %s does not exist\n", archive_name);
 			for (int i = 0; i < names_count; ++i)
 				free(names[i]);
 			free(names);
@@ -272,7 +271,7 @@ int extract(char *archive_name, char **names, int names_count){
 	if (!std){
 		archive_file = fopen_mkdir(archive_name, "r");
 		if( archive_file == NULL ){
-			printf("farthing: archive file %s does not exist\n", archive_name);
+			fprintf(stderr, "farthing: archive file %s does not exist\n", archive_name);
 			for (int i = 0; i < names_count; ++i)
 				free(names[i]);
 			free(names);
@@ -402,7 +401,6 @@ int delete(char *archive_name, char **names, int names_count){
 		if( archive_file == NULL ){
 			archive_file = fopen(archive_name, "w");
 			if ( archive_file ==  NULL ){
-				printf("farthing: No disk space\n");
 				exit(EXIT_FAILURE);
 			}
 		}	
@@ -442,7 +440,6 @@ int delete(char *archive_name, char **names, int names_count){
 		file_descriptor = mkstemp(temp_name);
 
 		if (file_descriptor < 1){
-			printf("Creation of temp file failed\n");
 			return 1;
 		}
 
@@ -504,10 +501,7 @@ int replace(char *archive_name, char **names, int names_count){
 	if (!std){
 		archive_file = fopen(archive_name, "r");
 		if( archive_file == NULL ){
-			printf("farthing: Archive file doesn't exist, creating %s\n", archive_name);
-			archive_file = fopen(archive_name, "w");
 			if ( archive_file ==  NULL ){
-				printf("No disk space??\n");
 				exit(EXIT_FAILURE);
 			}
 		}	
@@ -547,12 +541,8 @@ int replace(char *archive_name, char **names, int names_count){
 		file_descriptor = mkstemp(temp_name);
 
 		if (file_descriptor < 1){
-			printf("Creation of temp file failed\n");
 			return 1;
 		}
-		else{
-			printf("Temporary file [%s] created\n", temp_name);
-		}	
 
 		// open temporary file with pointer temp_file
 		temp_file = fdopen(file_descriptor, "w");
@@ -687,7 +677,6 @@ int getFileNames(char **file_names, char **names, int names_count){
 
 			listFilesRecursively(names[i], dir_files, num_files);
 			for (int i = 0; i < *num_files; ++i){
-				//printf("%s\n", dir_files[i]);
 				file_names[j] = malloc(sizeof(char)*(strlen(dir_files[i])+1));
 				strcpy(file_names[j], dir_files[i]);
 				j++;
@@ -741,7 +730,6 @@ void listFilesRecursively(char *basePath, char **dir_files, int *num_files)
 			strcat(path, "/");
 			strcat(path, dp->d_name);
 
-			//printf("%s\n", path);
 			if (isDirectory(path) == 0){
 				dir_files[*num_files] = malloc(sizeof(char)*(strlen(path)+1));
 				strcpy(dir_files[*num_files], path);
