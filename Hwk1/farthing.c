@@ -501,9 +501,7 @@ int replace(char *archive_name, char **names, int names_count){
 	if (!std){
 		archive_file = fopen(archive_name, "r");
 		if( archive_file == NULL ){
-			if ( archive_file ==  NULL ){
-				exit(EXIT_FAILURE);
-			}
+			archive_file = fopen(archive_name, "w+");
 		}	
 	}
 	else if (std){
