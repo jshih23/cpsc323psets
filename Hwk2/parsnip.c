@@ -78,16 +78,51 @@ void freeNodes() {
 	}
 }
 
+// takes list of tokens, parses them, and returns rearranged token list
+// rearranged order: ARG, LOCAL, redir, subcommands
 token * parse(token *list){
+// 	token* argList = malloc(sizeof(token*)*16);
+// 	token* redOpList = malloc(sizeof(token*)*16);
+// 	int i = 0;
+// 	int argListSize = 0;
+// 	int redOpListSize = 0;
+// 	while(list[i].type != NONE){
+// 		if (RED_OP(list[i].type)){
 
+// 			redOpList[0]=list[i]
+// 			redOpListSize++;
+// 		}
+// 		else{
+// 			argList[argListSize]=createNewToken(list[i].type, list[i].type);
+// 		}
+// 	}
 }
 
 token* createNewToken(int type, char* text){
 	token* tok = (token*)malloc(sizeof(token));
 	tok->type = type;
-	tok->text = (char*)malloc(sizeof(char)*6);
-	strcpy(tok->text, text);
+	if (text != NULL){
+		tok->text = (char*)malloc(sizeof(char)*6);
+		strcpy(tok->text, text);
+	}
+	else{
+		tok->text = NULL;
+	}
 	return tok;
+}
+
+void printTokenList(token* list){
+	int i = 0;
+	while(list[i].type != NONE){
+		if (list[i].text != NULL){
+			printf("type: %d text: %s\t", list[i].type, list[i].text);
+		}
+		else{
+			printf("type: %d text: %s\t", list[i].type, "NULL");
+		}
+		i++;
+	}
+	printf("\n");
 }
 
 void freeToken(token* tok){
@@ -96,25 +131,64 @@ void freeToken(token* tok){
 	return;
 }
 
-int main(int argc, char const *argv[])
-{
+// Free NONE-terminated array of tokens TOK and return NULL.
+// token *freeList (token *tok)
+// {
+//     for (int i = 0; tok[i].type != NONE;  i++) {
+// 	if (tok[i].text)
+// 	    free (tok[i].text);
+// 	tok[i].type = NONE;
+// 	tok[i].text = NULL;
+//     }
+//     free (tok);
+//     return NULL;
+// }
 
-	token* tok1 = createNewToken(1, "one");
-	token* tok2 = createNewToken(2, "two");
-	token* tok3 = createNewToken(3, "thre");
-	token* tok4 = createNewToken(4, "four");
+// int main(int argc, char const *argv[])
+// {
+//     token *list;
 
-	// Calling an Insert and printing list both in forward as well as reverse direction. 
-	insertAtTail(tok1); printNodes();
-	insertAtTail(tok2); printNodes();
-	insertAtHead(tok3); printNodes();
-	insertAtTail(tok4); printNodes();
+//     char *line = NULL;
+//     size_t nLine = 0;
 
-	freeNodes();
+// 	printf ("(_)$ ");
 
-	freeToken(tok1);
-	freeToken(tok2);
-	freeToken(tok3);
-	freeToken(tok4);
-	return 0;
-}
+// 	fflush (stdout);
+
+// 	getline (&line,&nLine, stdin); // Read line
+
+// 	list = tokenize (line);
+// 	printTokenList(list);
+
+// 	list = freeList (list);
+// 	printf ("\n");
+// 	free (line);
+// 	return 0;
+
+	// token* tok1 = createNewToken(1, "one");
+	// token* tok2 = createNewToken(2, "two");
+	// token* tok3 = createNewToken(3, "thre");
+	// token* tok4 = createNewToken(14, NULL);
+	// token* list = malloc(sizeof(token)*4);
+	// list[0] = *tok1;
+	// list[1] = *tok2;
+	// list[2] = *tok3;
+	// list[3] = *tok4;
+
+	//printf("%d\n", NONE);
+	
+
+	// // Calling an Insert and printing list both in forward as well as reverse direction. 
+	// insertAtTail(tok1); printNodes();
+	// insertAtTail(tok2); printNodes();
+	// insertAtHead(tok3); printNodes();
+	// insertAtTail(tok4); printNodes();
+
+	// freeNodes();
+
+	// freeToken(tok1);
+	// freeToken(tok2);
+	// freeToken(tok3);
+	// freeToken(tok4);
+// 	return 0;
+// }
