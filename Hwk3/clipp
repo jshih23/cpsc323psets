@@ -40,7 +40,7 @@ def removedef(content):
 
 # replace all (standalone) occurences of target with repl in content
 def replace(content, target, repl):
-	pattern = r"(\".*?\"|\'.*?\')|(\b%s\b)" % target
+	pattern = r"(\".*?\"|\'.*?\'|\".*|\'.*)|(\b%s\b)" % target
 	# first group captures quoted strings (double or single)
 	# second group captures specified standalone target
 	regex = re.compile(pattern, re.MULTILINE|re.DOTALL)
@@ -63,13 +63,12 @@ def remove_comments(content):
 		# if the 2nd group (capturing comments) is not None,
 		# it means we have captured a non-quoted (real) comment string.
 		if match.group(2) is not None:
-			return "" # so we will return empty to remove the comment
+			return " " # so we will return empty to remove the comment
 		else: # otherwise, we will return the 1st group
 			return match.group(1) # captured quoted-string
 	return regex.sub(_replacer, content)
 
-def main():
-	content = sys.stdin.read()
+def clip(content):
 	content = remove_comments(content)
 	content = wsconcat(content)
 
@@ -86,6 +85,16 @@ def main():
 	content = rmconcat(content)
 
 	content = content.strip()
+	return content
+
+def main():
+	content = sys.stdin.read()
+	if content.count('"') % 2 != 0:
+		print(clip(content))
+		print("STDERR = 2")
+		quit()
+
+	content = clip(content)
 	print content
 
 if __name__== "__main__":
