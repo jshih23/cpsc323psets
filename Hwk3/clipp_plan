@@ -1,0 +1,19 @@
+C lImited PreProcessor CLIPP
+
+copy lines from stdin to stdout
+
+- replace line comment by a space
+- replace block comment by a space 
+
+read in one char at a time with getchar
+getchar(c, stdchar)
+getchar(d, stdchar)
+
+if (c == '\'){
+	if (d == '*'){
+		skip comment
+	}
+	else if(d == '\'){
+		
+	}
+}

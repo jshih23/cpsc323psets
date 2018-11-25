@@ -1,0 +1,14 @@
+/* test text for clipp */
+
+#define one ## ##1##1
+#define two 2
+#define aye A
+#define 0ax 3 blah
+"#define see c"
+ 		#define bee b
+0ax
+// sub test
+one two aye bee see
+"one" 'two' aye
+
+function(one, two, aye)

@@ -1,0 +1,6 @@
+#define xyz ## S##O##S ##
+#define O two       // symbols
+#define S three
+#define two   2     /* digits */
+#define three 3
+cs xyz , "cs xyz" , 'cs xyz'
