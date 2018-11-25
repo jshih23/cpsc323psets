@@ -2,8 +2,12 @@
 import re
 import sys
 
-# deals with ##
-def concat(content):
+def rmLeadingNewlines(content):
+	pattern = "r(^\n*)"
+	content = re.sub(pattern, '', content)
+
+# deletes all ##, to be called at the very end
+def rmconcat(content):
 	pattern = r"(\".*?\"|\'.*?\')|(##)"
 	# first group captures quoted strings (double or single)
 	# second group captures token pasting operator (##)
@@ -17,10 +21,18 @@ def concat(content):
 			return match.group(1)
 	return regex.sub(_replacer, content)
 
+# takes ## VALUE and makes it ##VALUE (removes whitespace between ## and VALUE)
+def wsconcat(content):
+	pattern = r"(##)[ \t]+(\w+)"
+	return re.sub(pattern, r"\1\2", content, flags = re.M)
+
+def concat(content):
+	pattern = r"(\w)[ \t]*(##)[ \t]*(\w+)"
+	return re.sub(pattern, r"\1\2\3", content, flags = re.M)
+
 # makes list of #define-d variables (ignoring whitespace)
 def defList(content):
-	return re.findall(r"(^#define|^\s*#define)\s+([a-zA-Z_]\w*)\s+(\d*\.?\d+|\w+)$", content, flags = re.M)
-
+	return re.findall(r"(^#define|^\s*#define)\s+([a-zA-Z_]\w*)\s+(.*)$", content, flags = re.M)
 
 # remove lines starting with #define (ignoring whitespace)
 def removedef(content):
@@ -57,27 +69,24 @@ def remove_comments(content):
 	return regex.sub(_replacer, content)
 
 def main():
-	# fIn = open ('test3', 'r')
-	# fOut = open ('test2.txt','w')
 	content = sys.stdin.read()
-	
-	#content = fIn.read()
 	content = remove_comments(content)
-	content = concat(content)
+	content = wsconcat(content)
 
 	# acquire list of define-d variables
-	deflist = defList(content)
-	# remove lines with #define from content
-	content = removedef(content)
+	deflist = defList(content)	
 
 	# replace all define-d variables with their values
-	for item in deflist:
-		content = replace(content, str(item[1]), str(item[2]))
+	for ea in deflist:
+		for item in deflist:
+			content = replace(content, str(item[1]), str(item[2]))
 
+	content = removedef(content)
+	content = concat(content)
+	content = rmconcat(content)
+
+	content = content.strip()
 	print content
-	# fOut.write(content)
-	# fIn.close()
-	# fOut.close()
 
 if __name__== "__main__":
 	main()
