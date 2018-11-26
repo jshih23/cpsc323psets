@@ -89,10 +89,10 @@ def clip(content):
 
 def main():
 	content = sys.stdin.read()
-	if content.count('"') % 2 != 0:
-		print(clip(content))
-		print("STDERR = 2")
-		quit()
+	if content.count("\'") % 2 != 0:
+		print >> sys.stderr, "Unmatched single quote (\')"
+	if content.count("\"") % 2 != 0:
+		print >> sys.stderr, "Unmatched double quote (\")"
 
 	content = clip(content)
 	print content
